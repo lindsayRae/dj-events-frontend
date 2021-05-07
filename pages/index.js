@@ -4,7 +4,6 @@ import EventItem from '@/components/EventItem';
 import { API_URL } from '@/config/index';
 
 export default function HomePage({ events }) {
-  console.log('events', events);
   return (
     <Layout>
       <h1>Upcoming Events</h1>
@@ -24,14 +23,11 @@ export default function HomePage({ events }) {
 }
 
 export async function getStaticProps() {
-  console.log('running getStaticProps...');
-  const res = await fetch(`${API_URL}/api/events`);
+  const res = await fetch(`${API_URL}/events?_sort=date:ASC&_limit=3`);
   const events = await res.json();
 
-  // console.log(events);
-
   return {
-    props: { events: events.slice(0, 3) },
+    props: { events },
     revalidate: 1,
   };
 }
