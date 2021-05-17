@@ -4,8 +4,6 @@ import Pagination from '@/components/Pagination';
 import { API_URL, PER_PAGE } from '@/config/index';
 
 export default function EventsPage({ events, page, total }) {
-  console.log('** Events: ', events);
-
   return (
     <Layout>
       <h1>Events</h1>
@@ -45,7 +43,6 @@ export async function getServerSideProps({ query: { page = 1 } }) {
   );
   const events = await eventRes.json();
 
-  console.log(page);
   return {
     props: { events, page: +page, total },
   };
