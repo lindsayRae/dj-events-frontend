@@ -175,13 +175,19 @@ export default function EditEventPage({ evt }) {
   );
 }
 
-export async function getServerSideProps({ params: { id } }) {
+// server side
+// the cookie is located in the req
+export async function getServerSideProps({ params: { id }, req }) {
+  const { token } = parseCookies(req);
+
   const res = await fetch(`${API_URL}/events/${id}`);
   const evt = await res.json();
 
+  console.log('/events/${id}: cookie', req.headers.cookie);
   return {
     props: {
       evt,
+      token,
     },
   };
 }
