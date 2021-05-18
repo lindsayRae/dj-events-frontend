@@ -10,7 +10,6 @@ export const AuthProvider = ({ children }) => {
 
   const router = useRouter();
 
-  console.log('***User from AuthContext: ', user);
   useEffect(() => checkUserLoggedIn(), []);
 
   // Register User
