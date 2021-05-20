@@ -48,20 +48,37 @@ export default function EventPage({ evt }) {
   );
 }
 
-export async function getStaticPaths() {
-  const res = await fetch(`${API_URL}/events`);
-  const events = await res.json();
+//! Use this for DEV ONLY
+// export async function getStaticPaths() {
+//   const res = await fetch(`${API_URL}/events`);
+//   const events = await res.json();
 
-  const paths = events.map((evt) => ({
-    params: { slug: evt.slug },
-  }));
+//   const paths = events.map((evt) => ({
+//     params: { slug: evt.slug },
+//   }));
 
-  return {
-    paths,
-    fallback: true,
-  };
-}
-export async function getStaticProps({ params: { slug } }) {
+//   return {
+//     paths,
+//     fallback: true,
+//   };
+// }
+//! Use this for DEV ONLY
+// export async function getStaticProps({ params: { slug } }) {
+//   const res = await fetch(`${API_URL}/events?slug=${slug}`);
+//   const events = await res.json();
+
+//   return {
+//     props: {
+//       evt: events[0],
+//     },
+//     revalidate: 1,
+//   };
+// }
+//! Use this for PROD ONLY
+export async function getServerSideProps({ query: { slug } }) {
+  //! no longer exists
+  // const res = await fetch(`${API_URL}/api/events/${slug}`);
+  //! change to the below path
   const res = await fetch(`${API_URL}/events?slug=${slug}`);
   const events = await res.json();
 
@@ -69,17 +86,5 @@ export async function getStaticProps({ params: { slug } }) {
     props: {
       evt: events[0],
     },
-    revalidate: 1,
   };
 }
-
-// export async function getServerSideProps({ query: { slug } }) {
-//   const res = await fetch(`${API_URL}/api/events/${slug}`);
-//   const events = await res.json();
-
-//   return {
-//     props: {
-//       evt: events[0],
-//     },
-//   };
-// }
